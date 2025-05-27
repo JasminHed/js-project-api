@@ -1,5 +1,9 @@
 import cors from "cors"
 import express from "express"
+import listEndpoints from "express-list-endpoints";
+import data from "./data.json"; 
+
+
 
 // Defines the port the app will run on. Defaults to 8080, but can be overridden
 // when starting the server. Example command to overwrite PORT env variable value:
@@ -13,8 +17,25 @@ app.use(express.json())
 
 // Start defining your routes here
 app.get("/", (req, res) => {
-  res.send("Hello Technigo!")
+  res.json(listEndpoints(app)) //returns documentation of API (1st step in req)
 })
+
+//by putting messages as endpint we are returning all messages from data.json
+app.get("/messages", (req, res)=> { 
+  res.json(data)
+})
+
+//by adding id the server finds 1 id/message
+app.get("/messages/:id", (req, res) => {
+  const message = data.find(item => item._id === req.params.id);
+
+  if (!message) {
+    return res.status(404).json({ error: "Message not found" });
+  }
+
+  res.json(message);
+});
+
 
 // Start the server
 app.listen(port, () => {
