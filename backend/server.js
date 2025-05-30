@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import listEndpoints from "express-list-endpoints";
-import data from "./data.json";
+import data from "./data.json" with { type: "json" };
 
 const port = process.env.PORT || 8080;
 const app = express();
