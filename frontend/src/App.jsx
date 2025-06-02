@@ -6,6 +6,9 @@ const App = () => {
 
   const fetchMessages = () => {
     setLoading(true);
+
+    console.log("API with hearts=5");
+
     fetch("https://jasmin-apiproject.onrender.com/messages")
       .then((response) => {
         if (response.ok) {
@@ -38,6 +41,8 @@ const App = () => {
         throw new Error("Network response was not found");
       })
       .then((data) => {
+        console.log("filtered data:", data);
+        console.log("Number of messages:", data.length);
         setMessages(data);
       })
       .catch((error) => {
@@ -56,6 +61,7 @@ const App = () => {
     <>
       <h1>Your daily dose of happy thoughts!</h1>
       <button onClick={handleClick}>Get messages with 5+ hearts</button>
+
       {messages.length > 0 &&
         messages.map((message) => (
           <p key={message._id}>
