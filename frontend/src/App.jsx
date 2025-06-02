@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function App() {
+const App = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -49,21 +49,21 @@ function App() {
   };
 
   if (loading) {
-    return <p>LOADING...</p>;
+    return <p>Loading happy thoughts, don´t go anywhere!</p>;
   }
 
   return (
     <>
-      <h1>Happy Thoughts!</h1>
+      <h1>Your daily dose of happy thoughts!</h1>
       <button onClick={handleClick}>Get messages with 5+ hearts</button>
       {messages.length > 0 &&
         messages.map((message) => (
           <p key={message._id}>
-            {message.message} - ❤️ {message.hearts}
+            {message.message} ❤️ {message.hearts}
           </p>
         ))}
     </>
   );
-}
+};
 
 export default App;

@@ -25,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/JasminHed/js-project-api/issues"
   },
-  "homepage": "https://github.com/JasminHed/js-project-api#readme"
+  "homepage": "https://github.com/JasminHed/js-project-api#readme",
+  "engines": {
+    "node": "18"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
 }
