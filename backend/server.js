@@ -84,33 +84,33 @@ app.listen(port, () => {
 
 
 //create model for mongo database - validation + error handling on post request
-const Person = mongoose.model("Person", {
-name: {
-  type: String,
-  required: true,
-  minlength: 2,
-  maxlength: 500,
+//const Person = mongoose.model("Person", {
+//name: {
+  //type: String,
+  //required: true,
+  //minlength: 2,
+ // maxlength: 500,
 
-},
-height: {
-type: Number,
-required: true,
-min: 5,
-},
+//},
+//height: {
+//type: Number,
+//required: true,
+//min: 5,
+//},
 
-birthdate: {
-type: Date,
-default: Date.now
-}
-})
+//birthdate: {
+//type: Date,
+//default: Date.now
+//}
+//})
 
-new Person ({name: "Van", height: 150}).save()
+//new Person ({name: "Van", height: 150}).save()
 
 //Endpint for this
-app.post ("/people", async (req, res)=> {
-  const erson = new Person (req.body) //create a person w. req.body using our model above. automatically validate when saving. 
-  const savedPerson = await person.save() //sense async function, we await results. Store results in savedPerson
-  res.join(savedPerson) //here we send the results back to the client
+//app.post ("/people", async (req, res)=> {
+  //const erson = new Person (req.body) //create a person w. req.body using our model above. automatically validate when saving. 
+  //const savedPerson = await person.save() //sense async function, we await results. Store results in savedPerson
+  //res.join(savedPerson) //here we send the results back to the client
 
   // for error, use status.json and then the code (404) or whatever works. 
-})
+//})
