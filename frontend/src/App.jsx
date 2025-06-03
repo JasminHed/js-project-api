@@ -33,7 +33,7 @@ const App = () => {
 
   const handleClick = () => {
     setLoading(true);
-    fetch("https://jasmin-apiproject.onrender.com/messages?hearts=5")
+    fetch("http://localhost:8080/messages?hearts=5") //("https://jasmin-apiproject.onrender.com/messages?hearts=5")
       .then((response) => {
         if (response.ok) {
           return response.json();
