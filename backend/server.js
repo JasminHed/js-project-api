@@ -4,7 +4,7 @@ import express from "express";
 import listEndpoints from "express-list-endpoints";
 import mongoose from "mongoose"
 
-//import data from "./data.json"
+
 
 dotenv.config()
 
@@ -34,7 +34,11 @@ const port = process.env.PORT || 8080;
 const app = express();
 
 // Add middlewares to enable cors and json body parsing
-app.use(cors());
+app.use(
+  cors({
+    origin: "*"
+  })
+);
 app.use(express.json());
 
 
@@ -91,7 +95,7 @@ try {
 
   res.status (201).json ({
     sucess: true,
-    response: newMessage,
+    response: savedMessage,
     message: "message created successfully"
 
   })
@@ -119,7 +123,7 @@ app.delete("/messages/:id", async (req, res) => {
     }
 
     res.status(200).json({
-      success: true,
+      sucess: true,
       response: deletedMessage,
       message: "Message deleted successfully"
     });
