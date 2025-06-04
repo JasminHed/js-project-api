@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+const BASE_URL = "https://js-project-api-x10r.onrender.com";
 
 const App = () => {
   const [messages, setMessages] = useState([]);
@@ -7,9 +9,7 @@ const App = () => {
   const fetchMessages = () => {
     setLoading(true);
 
-    console.log("API with hearts=5");
-
-    fetch("https://jasmin-apiproject.onrender.com/messages")
+    fetch(`${BASE_URL}/messages`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -33,7 +33,7 @@ const App = () => {
 
   const handleClick = () => {
     setLoading(true);
-    fetch("http://localhost:8080/messages?hearts=5") //("https://jasmin-apiproject.onrender.com/messages?hearts=5")
+    fetch(`${BASE_URL}/messages?hearts=5`)
       .then((response) => {
         if (response.ok) {
           return response.json();

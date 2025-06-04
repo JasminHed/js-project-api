@@ -12,14 +12,19 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/happyThoughts"
 mongoose.connect(mongoUrl)
 
 const thoughtSchema = new mongoose.Schema({
-  message: String,
-  hearts: {
+  message: {
+  type: String, //user input
+  required: true, //must exist
+  minlength: 4,
+  maxlength: 20
+},
+  hearts: { //like count
     type: Number,
     default: 0
   },
-  createdAt: {
+  createdAt: { //creation timestamp
     type: Date,
-    default: Date.now
+    default: Date.now // automatic timestamp
   }
 })
 
@@ -58,7 +63,7 @@ app.get("/messages", async (req, res) => {
     const filteredMessages = await Thought.find(query);
     res.json(filteredMessages);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch messages" });
+    res.status(500).json({ error: "Failed to fetch happy thought messages" });
   }
 });
 
@@ -67,14 +72,102 @@ app.get("/messages/:id", async (req, res) => {
     const message = await Thought.findById(req.params.id);
     
     if (!message) {
-      return res.status(404).json({ error: "Message not found" });
+      return res.status(404).json({ error: "Happy thought message not found" });
     }
     
     res.json(message);
   } catch (error) {
-    res.status(500).json({ error: "Message not found" });
+    res.status(500).json({ error: "Happy thought message not found" });
   }
 });
+
+
+app.post("/messages", async (req, res) => {
+const { message, hearts } = req.body
+
+try {
+  const newMessage = await new Thought ({ message, hearts}) //saved to variabel to use in response
+  const savedMessage = await newMessage.save(); 
+
+  res.status (201).json ({
+    sucess: true,
+    response: newMessage,
+    message: "message created successfully"
+
+  })
+} catch (error) {
+  res.status (500).json ({
+    sucess: false,
+    response: error,
+    message: "happy thought could not be found, please try again"
+
+  })
+}
+})
+
+app.delete("/messages/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedMessage = await Thought.findByIdAndDelete(id);
+
+    if (!deletedMessage) {
+      return res.status(404).json({
+        success: false,
+        message: "Message not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      response: deletedMessage,
+      message: "Message deleted successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      response: error,
+      message: "Something went wrong while deleting the message"
+    });
+  }
+});
+
+
+app.patch("/messages/:id", async (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+
+  try {
+    const updatedMessage = await Thought.findByIdAndUpdate(
+      id,
+      { message },
+      {
+        new: true,
+        runValidators: true // ensure it validates the schema
+      }
+    );
+
+    if (!updatedMessage) {
+      return res.status(404).json({
+        success: false,
+        message: "Thought not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      response: updatedMessage,
+      message: "Updated message successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      response: error,
+      message: "Failed to update the message"
+    });
+  }
+});
+
 
 
 // Start the server
