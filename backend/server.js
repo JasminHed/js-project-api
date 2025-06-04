@@ -4,8 +4,6 @@ import express from "express";
 import listEndpoints from "express-list-endpoints";
 import mongoose from "mongoose"
 
-
-
 dotenv.config()
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/happyThoughts"
@@ -34,11 +32,7 @@ const port = process.env.PORT || 8080;
 const app = express();
 
 // Add middlewares to enable cors and json body parsing
-app.use(
-  cors({
-    origin: "*"
-  })
-);
+app.use(cors());
 app.use(express.json());
 
 
