@@ -77,6 +77,42 @@ const App = () => {
       });
   };
 
+  const deleteMessage = (id) => {
+    fetch(`${BASE_URL}/messages/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to delete the message");
+        return res.json();
+      })
+      .then(() => {
+        fetchMessages();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const editMessage = (id) => {
+    const updatedText = prompt("Edit your message:");
+    if (!updatedText) return;
+    fetch(`${BASE_URL}/messages/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: updatedText }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to edit the message");
+        return res.json();
+      })
+      .then(() => {
+        fetchMessages();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   if (loading) {
     return <p>Loading happy thoughts, don´t go anywhere!</p>;
   }
@@ -94,9 +130,13 @@ const App = () => {
 
       {messages.length > 0 &&
         messages.map((message) => (
-          <p key={message._id}>
-            {message.message} ❤️ {message.hearts}
-          </p>
+          <div key={message._id}>
+            <p>
+              {message.message} ❤️ {message.hearts}
+            </p>
+            <button onClick={() => deleteMessage(message._id)}>Delete</button>
+            <button onClick={() => editMessage(message._id)}>Edit</button>
+          </div>
         ))}
     </>
   );
