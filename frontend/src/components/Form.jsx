@@ -45,6 +45,8 @@ const Textarea = styled.textarea`
   resize: none;
   width: 90%;
   height: 60px;
+  background-color: whitesmoke;
+  color: black;
 
   @media (min-width: 360px) {
     margin-left: 12px;
@@ -57,15 +59,15 @@ const Textarea = styled.textarea`
 
 const Button = styled.button`
   border-radius: 20px;
-  background-color: var(--color-button);
+  border: 2px solid whitesmoke;
   width: auto;
   padding: 12px;
   content: cover;
   border: none;
-  margin: 6px 6px 12px 12px;
+  margin: 0 auto;
 
   Button:focus {
-    border: 2px solid var(--color-border);
+    border: 2px solid #646cff;
   }
 
   @media (min-width: 360px) {
