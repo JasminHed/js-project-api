@@ -1,6 +1,29 @@
 import { useEffect, useState } from "react";
-
+import MessageCard from "./components/MessageCard";
+import styled from "styled-components";
 import Form from "./components/Form.jsx";
+
+const GetButton = styled.button`
+  display: block;
+  margin: 1rem auto;
+  border-radius: 20px;
+  width: auto;
+  padding: 12px;
+  content: cover;
+  border: none;
+  margin: 0 auto;
+  background-color: #646cff;
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  &:hover {
+    background-color: #3d3fa6;
+  }
+
+  Button:focus {
+    border: 2px solid white;
+  }
+`;
 
 const BASE_URL = "https://js-project-api-x10r.onrender.com";
 
@@ -126,17 +149,16 @@ const App = () => {
         handleMessage={handleMessage}
         error={error}
       />
-      <button onClick={handleClick}>Get messages with 5+ hearts</button>
+      <GetButton onClick={handleClick}>Get messages with 5+ hearts</GetButton>
 
       {messages.length > 0 &&
         messages.map((message) => (
-          <div key={message._id}>
-            <p>
-              {message.message} ❤️ {message.hearts}
-            </p>
-            <button onClick={() => deleteMessage(message._id)}>Delete</button>
-            <button onClick={() => editMessage(message._id)}>Edit</button>
-          </div>
+          <MessageCard
+            key={message._id}
+            message={message}
+            onDelete={deleteMessage}
+            onEdit={editMessage}
+          />
         ))}
     </>
   );

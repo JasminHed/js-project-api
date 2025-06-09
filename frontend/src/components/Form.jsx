@@ -59,12 +59,12 @@ const Textarea = styled.textarea`
 
 const Button = styled.button`
   border-radius: 20px;
-  border: 2px solid whitesmoke;
+  cursor: pointer;
   width: auto;
   padding: 12px;
   content: cover;
   border: none;
-  margin: 0 auto;
+  margin-bottom: 20px;
 
   Button:focus {
     border: 2px solid #646cff;
