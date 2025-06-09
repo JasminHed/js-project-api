@@ -1,4 +1,5 @@
 import cors from "cors";
+import crypto from "crypto"
 import dotenv from "dotenv"
 import express from "express";
 import listEndpoints from "express-list-endpoints";
@@ -165,6 +166,39 @@ app.patch("/messages/:id", async (req, res) => {
     });
   }
 });
+
+// POST Increment hearts by 1
+app.post("/messages/:id/like", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const updatedMessage = await Thought.findByIdAndUpdate(
+      id,
+      { $inc: { hearts: 1 } }, // increase by 1
+      { new: true }
+    );
+
+    if (!updatedMessage) {
+      return res.status(404).json({
+        success: false,
+        message: "Message not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      response: updatedMessage,
+      message: "Like added successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      response: error,
+      message: "Failed to like the message",
+    });
+  }
+});
+
 
 
 
