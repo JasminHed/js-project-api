@@ -4,7 +4,7 @@ const FormWrapper = styled.form`
   border-radius: 3px;
   border: 1px solid whitesmoke;
   box-shadow: 6px 8px 0 0 whitesmoke;
-  max-width: fit-content;
+  width: 90%;
   margin: 0 auto;
 
   @media (min-width: 480px) {

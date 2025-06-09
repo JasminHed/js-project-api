@@ -6,7 +6,7 @@ const Card = styled.div`
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem auto;
-  max-width: 500px;
+  max-width: 400px;
   background-color: #1e1e1e;
   color: white;
   box-shadow: 3px 4px 0 0 whitesmoke;
