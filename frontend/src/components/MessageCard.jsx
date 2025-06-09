@@ -6,10 +6,11 @@ const Card = styled.div`
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem auto;
-  max-width: 400px;
+  width: 85%;
+  max-width: 500px;
   background-color: #1e1e1e;
   color: white;
-  box-shadow: 3px 4px 0 0 whitesmoke;
+  box-shadow: 2px 2px 0 0 whitesmoke;
   margin-top: 30px;
 `;
 

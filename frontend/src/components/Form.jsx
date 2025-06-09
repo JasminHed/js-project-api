@@ -3,8 +3,9 @@ import styled from "styled-components";
 const FormWrapper = styled.form`
   border-radius: 3px;
   border: 1px solid whitesmoke;
-  box-shadow: 6px 8px 0 0 whitesmoke;
-  width: 90%;
+  box-shadow: 2px 2px 0 0 whitesmoke;
+  width: 95%;
+  max-width: 500px;
   margin: 0 auto;
 
   @media (min-width: 480px) {
@@ -65,6 +66,7 @@ const Button = styled.button`
   content: cover;
   border: none;
   margin-bottom: 20px;
+  margin-left: 10px;
 
   Button:focus {
     border: 2px solid #646cff;
