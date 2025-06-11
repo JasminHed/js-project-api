@@ -157,6 +157,8 @@ const App = () => {
   return (
     <>
       <h1>Your daily dose of happy thoughts!</h1>
+      <Register />
+      <Login />
       <Form
         messageText={messageText}
         setMessageText={setMessageText}
