@@ -200,7 +200,7 @@ app.post("/messages/:id/like", async (req, res) => {
   }
 });
 
-//registration endpoint that frontend form will POST to. 
+//POST user, registration endpoint.
 app.post("/users", (req, res) => {
   try {
     const { name, email, password } = req.body
@@ -214,11 +214,25 @@ app.post("/users", (req, res) => {
       accessToken: user.accessToken,
     })
   } catch (error) {
+    if (error.code === 11000) {
+      if (error.keyValue.email) {
+        return res.status(400).json({
+          success: false,
+          message: "That email address already exists"
+        });
+      }
+      if (error.keyValue.name) {
+        return res.status(400).json({
+          success: false,
+          message: "That username already exists"
+        });
+      }
+    }
     res.status(400).json({
       success: false,
       message: "Could not create user",
       errors: error
-    })
+    });
   }
 })
 
