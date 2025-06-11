@@ -9,7 +9,6 @@ import mongoose from "mongoose"
 import Thought from "./model/Thoughts.js";
 import User from "./model/User.js";
 
-
 //checks if the user is logged in before allowing access to protected routes
 const authenticateUser = async (req, res, next) => {
   const user = await User.findOne({
@@ -83,7 +82,7 @@ app.get("/messages/:id", async (req, res) => {
 });
 
 
-app.post("/messages", async (req, res) => {
+app.post("/messages", authenticateUser, async (req, res) => {
 const { message, hearts } = req.body
 
 try {
@@ -106,7 +105,7 @@ try {
 }
 })
 
-app.delete("/messages/:id", async (req, res) => {
+app.delete("/messages/:id", authenticateUser, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -133,8 +132,8 @@ app.delete("/messages/:id", async (req, res) => {
   }
 });
 
-
-app.patch("/messages/:id", async (req, res) => {
+//authenticateUser to protect routes, only users can now perform action
+app.patch("/messages/:id", authenticateUser, async (req, res) => {
   const { id } = req.params;
   const { message } = req.body;
 
@@ -201,7 +200,7 @@ app.post("/messages/:id/like", async (req, res) => {
   }
 });
 
-//registration endpoint that frontend form will POST to. See Van video. 
+//registration endpoint that frontend form will POST to. 
 app.post("/users", (req, res) => {
   try {
     const { name, email, password } = req.body
