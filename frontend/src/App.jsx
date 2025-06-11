@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import MessageCard from "./components/MessageCard";
 import styled from "styled-components";
+
 import Form from "./components/Form.jsx";
+import MessageCard from "./components/MessageCard";
 
 const GetButton = styled.button`
   display: block;
