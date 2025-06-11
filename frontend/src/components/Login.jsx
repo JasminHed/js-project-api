@@ -30,6 +30,7 @@ const Login = () => {
         } else {
           localStorage.setItem("userId", data.userId); //stores user ID in local storage
           localStorage.setItem("accessToken", data.accessToken);
+          setError("Login successful!"); // Add success message
         }
       });
   };

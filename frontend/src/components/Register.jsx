@@ -29,6 +29,8 @@ const Register = () => {
         if (data.success) {
           localStorage.setItem("accessToken", data.accessToken);
           localStorage.setItem("userId", data.id);
+          setFormData({ name: "", email: "", password: "" });
+          setError("Registration successful! You can now create thoughts.");
         } else {
           setError(data.message);
         }
