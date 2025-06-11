@@ -15,7 +15,7 @@ const thoughtSchema = new mongoose.Schema({
   type: String, //user input
   required: true, //must exist
   minlength: 4,
-  maxlength: 20
+  maxlength: 140
 },
   hearts: { //like count
     type: Number,
