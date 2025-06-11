@@ -1,9 +1,14 @@
-import Thought from "./models/Thought.js";
 import cors from "cors"
 import dotenv from "dotenv"
 import express from "express";
 import listEndpoints from "express-list-endpoints";
 import mongoose from "mongoose"
+
+import Thought from "./model/Thoughts.js";
+import Thought from "./model/User.js";
+
+import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 dotenv.config()
 
@@ -181,6 +186,27 @@ app.post("/messages/:id/like", async (req, res) => {
   }
 });
 
+//registration endpoint that frontend form will POST to. See Van video. 
+app.post("/users", (req, res) => {
+  try {
+    const { name, email, password } = req.body
+    const salt = bcrypt.genSaltSync()
+    const user = new User({ name, email, password: bcrypt.hashSync(password, salt) })
+    user.save()
+    res.status(201).json({
+      success: true,
+      message: "User created",
+      id: user._id,
+      accessToken: user.accessToken,
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Could not create user",
+      errors: error
+    })
+  }
+})
 
 
 
