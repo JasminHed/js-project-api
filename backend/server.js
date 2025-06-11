@@ -26,7 +26,7 @@ const authenticateUser = async (req, res, next) => {
 
 dotenv.config()
 
-//atlas database from en.vfile if atlas missing go to local database
+//atlas database from env.file if atlas missing go to local database
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/happyThoughts"
 mongoose.connect(mongoUrl) 
 
@@ -34,12 +34,14 @@ const port = process.env.PORT || 8080;
 const app = express();
 
 // Add middlewares to enable cors and json body parsing
-app.use(cors());
+app.use(cors({
+  origin: "https://apifrontback.netlify.app" //allow netlify
+}));
 app.use(express.json());
 
 
 
-// Documentation endpoint
+// All messages enpoint
 app.get("/", (req, res) => {
   const endpoints = listEndpoints(app);
   res.json({
@@ -48,6 +50,7 @@ app.get("/", (req, res) => {
   });
 });
 
+//Messages endpoint
 app.get("/messages", async (req, res) => {
   const { hearts } = req.query;
   
@@ -67,6 +70,7 @@ app.get("/messages", async (req, res) => {
   }
 });
 
+//message w. ID endpoint
 app.get("/messages/:id", async (req, res) => {
   try {
     const message = await Thought.findById(req.params.id);
@@ -81,7 +85,7 @@ app.get("/messages/:id", async (req, res) => {
   }
 });
 
-
+//post a thought endpoint
 app.post("/messages", authenticateUser, async (req, res) => {
 const { message, hearts } = req.body
 
@@ -105,6 +109,7 @@ try {
 }
 })
 
+//delete endpoint
 app.delete("/messages/:id", authenticateUser, async (req, res) => {
   const { id } = req.params;
 
@@ -132,7 +137,7 @@ app.delete("/messages/:id", authenticateUser, async (req, res) => {
   }
 });
 
-//authenticateUser to protect routes, only users can now perform action
+//?
 app.patch("/messages/:id", authenticateUser, async (req, res) => {
   const { id } = req.params;
   const { message } = req.body;
@@ -168,7 +173,7 @@ app.patch("/messages/:id", authenticateUser, async (req, res) => {
   }
 });
 
-// POST Increment hearts by 1
+//messages with heartlike >5 endpoint
 app.post("/messages/:id/like", async (req, res) => {
   const { id } = req.params;
 
@@ -200,7 +205,7 @@ app.post("/messages/:id/like", async (req, res) => {
   }
 });
 
-//POST user, registration endpoint.
+//user registration endpoint.
 app.post("/users", (req, res) => {
   try {
     const { name, email, password } = req.body
@@ -236,14 +241,17 @@ app.post("/users", (req, res) => {
   }
 })
 
-//checks email+password and returns userId if valid, or notfound, true if invalid.
+//log in endpoint
 app.post("/sessions", async (req, res) => {
   const user = await User.findOne({
     email: req.body.email
   })
 
   if (user && bcrypt.compareSync(req.body.password, user.password)) {
-    res.json({ userId: user._id })
+    res.json({ 
+      userId: user._id,
+      accessToken: user.accessToken
+    })
   } else {
     res.json({ notFound: true })
   }
