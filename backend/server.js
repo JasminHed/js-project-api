@@ -1,4 +1,6 @@
+import bcrypt from "bcrypt";
 import cors from "cors"
+import crypto from "crypto";
 import dotenv from "dotenv"
 import express from "express";
 import listEndpoints from "express-list-endpoints";
@@ -6,9 +8,6 @@ import mongoose from "mongoose"
 
 import Thought from "./model/Thoughts.js";
 import Thought from "./model/User.js";
-
-import bcrypt from "bcrypt";
-import crypto from "crypto";
 
 dotenv.config()
 
@@ -205,6 +204,19 @@ app.post("/users", (req, res) => {
       message: "Could not create user",
       errors: error
     })
+  }
+})
+
+//checks email+password and returns userId if valid, or notfound, true if invalid.
+app.post("/sessions", async (req, res) => {
+  const user = await User.findOne({
+    email: req.body.email
+  })
+
+  if (user && bcrypt.compareSync(req.body.password, user.password)) {
+    res.json({ userId: user._id })
+  } else {
+    res.json({ notFound: true })
   }
 })
 
