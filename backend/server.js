@@ -1,5 +1,5 @@
-import cors from "cors";
-import crypto from "crypto"
+import Thought from "./models/Thought.js";
+import cors from "cors"
 import dotenv from "dotenv"
 import express from "express";
 import listEndpoints from "express-list-endpoints";
@@ -7,27 +7,9 @@ import mongoose from "mongoose"
 
 dotenv.config()
 
+//atlas database from en.vfile if atlas missing go to local database
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/happyThoughts"
-mongoose.connect(mongoUrl)
-
-const thoughtSchema = new mongoose.Schema({
-  message: {
-  type: String, //user input
-  required: true, //must exist
-  minlength: 4,
-  maxlength: 140
-},
-  hearts: { //like count
-    type: Number,
-    default: 0
-  },
-  createdAt: { //creation timestamp
-    type: Date,
-    default: Date.now // automatic timestamp
-  }
-})
-
-const Thought = mongoose.model("Thought", thoughtSchema)
+mongoose.connect(mongoUrl) 
 
 const port = process.env.PORT || 8080;
 const app = express();
