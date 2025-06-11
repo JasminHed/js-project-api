@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import Form from "./components/Form.jsx";
-import MessageCard from "./components/MessageCard";
+import Login from "./components/Login.jsx";
+import MessageCard from "./components/MessageCard.jsx";
+import Register from "./components/Register.jsx";
 
 const GetButton = styled.button`
   display: block;
@@ -39,8 +41,15 @@ const App = () => {
     event.preventDefault();
     fetch(`${BASE_URL}/messages`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: messageText }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("accessToken"), //backend "this user is logged in" so they can pass authentication.
+      },
+
+      body: JSON.stringify({
+        message: messageText,
+        user: localStorage.getItem("userId"), //backend "this message belongs to this specific user" so it gets saved with the correct owner.
+      }),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Could not post happy thought");
@@ -104,6 +113,9 @@ const App = () => {
   const deleteMessage = (id) => {
     fetch(`${BASE_URL}/messages/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("accessToken"),
+      },
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to delete the message");
@@ -123,6 +135,7 @@ const App = () => {
     fetch(`${BASE_URL}/messages/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
+      Authorization: localStorage.getItem("accessToken"),
       body: JSON.stringify({ message: updatedText }),
     })
       .then((res) => {
