@@ -11,10 +11,13 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Form data:", formData);
     if (!formData.name || !formData.email || !formData.password) {
+      console.log("validation failed");
       setError("Please fill in all fields");
       return;
     }
+    console.log("about to fecth");
 
     fetch("https://js-project-api-x10r.onrender.com/users", {
       method: "POST",
@@ -30,7 +33,7 @@ const Register = () => {
           setError(data.message);
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setError("Network error. Please try again.");
       });
   };
