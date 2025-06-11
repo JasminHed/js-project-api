@@ -7,7 +7,23 @@ import listEndpoints from "express-list-endpoints";
 import mongoose from "mongoose"
 
 import Thought from "./model/Thoughts.js";
-import Thought from "./model/User.js";
+import User from "./model/User.js";
+
+
+//checks if the user is logged in before allowing access to protected routes
+const authenticateUser = async (req, res, next) => {
+  const user = await User.findOne({
+    accessToken: req.header("Authorization")
+  })
+  if (user) {
+    req.user = user
+    next()
+  } else {
+    res.status(401).json({
+      loggedOut: true
+    })
+  }
+}
 
 dotenv.config()
 
