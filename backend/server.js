@@ -35,7 +35,7 @@ const app = express();
 
 // Add middlewares to enable cors and json body parsing
 app.use(cors({
-  origin: ["https://apifrontback.netlify.app"] //allow netlify
+  origin: ["https://apifrontback.netlify.app", "http://localhost:5173" ] //allow netlify
 }));
 app.use(express.json());
 
