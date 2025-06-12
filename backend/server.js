@@ -41,7 +41,7 @@ app.use(express.json());
 
 
 
-// All messages enpoint
+// All endpoints 
 app.get("/", (req, res) => {
   const endpoints = listEndpoints(app);
   res.json({
@@ -50,7 +50,7 @@ app.get("/", (req, res) => {
   });
 });
 
-//Messages endpoint
+//Endpoint for all messages
 app.get("/messages", async (req, res) => {
   const { hearts } = req.query;
   
@@ -70,7 +70,7 @@ app.get("/messages", async (req, res) => {
   }
 });
 
-//message w. ID endpoint
+//Endpoint for specific message (id)
 app.get("/messages/:id", async (req, res) => {
   try {
     const message = await Thought.findById(req.params.id);
@@ -85,95 +85,7 @@ app.get("/messages/:id", async (req, res) => {
   }
 });
 
-//post a thought endpoint
-app.post("/messages", authenticateUser, async (req, res) => {
-const { message, hearts } = req.body
-
-try {
-  const newMessage = await new Thought ({ message, hearts}) //saved to variabel to use in response
-  const savedMessage = await newMessage.save(); 
-
-  res.status (201).json ({
-    sucess: true,
-    response: savedMessage,
-    message: "message created successfully"
-
-  })
-} catch (error) {
-  res.status (500).json ({
-    sucess: false,
-    response: error,
-    message: "happy thought could not be found, please try again"
-
-  })
-}
-})
-
-//delete endpoint
-app.delete("/messages/:id", authenticateUser, async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const deletedMessage = await Thought.findByIdAndDelete(id);
-
-    if (!deletedMessage) {
-      return res.status(404).json({
-        success: false,
-        message: "Message not found"
-      });
-    }
-
-    res.status(200).json({
-      sucess: true,
-      response: deletedMessage,
-      message: "Message deleted successfully"
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      response: error,
-      message: "Something went wrong while deleting the message"
-    });
-  }
-});
-
-//?
-app.patch("/messages/:id", authenticateUser, async (req, res) => {
-  const { id } = req.params;
-  const { message } = req.body;
-
-  try {
-    const updatedMessage = await Thought.findByIdAndUpdate(
-      id,
-      { message },
-      {
-        new: true,
-        runValidators: true // ensure it validates the schema
-      }
-    );
-
-    if (!updatedMessage) {
-      return res.status(404).json({
-        success: false,
-        message: "Thought not found"
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      response: updatedMessage,
-      message: "Updated message successfully"
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      response: error,
-      message: "Failed to update the message"
-    });
-  }
-});
-
-//messages with heartlike >5 endpoint
+//POST Endpoint for liking a specific message
 app.post("/messages/:id/like", async (req, res) => {
   const { id } = req.params;
 
@@ -205,7 +117,7 @@ app.post("/messages/:id/like", async (req, res) => {
   }
 });
 
-//user registration endpoint.
+//Endpoint registration (body)
 app.post("/users", (req, res) => {
   try {
     const { name, email, password } = req.body
@@ -241,7 +153,7 @@ app.post("/users", (req, res) => {
   }
 })
 
-//log in endpoint
+//Endpoint log in (body)
 app.post("/sessions", async (req, res) => {
   const user = await User.findOne({
     email: req.body.email
@@ -256,6 +168,98 @@ app.post("/sessions", async (req, res) => {
     res.json({ notFound: true })
   }
 })
+
+//Authorization
+
+//POST Endpoint create a thought
+app.post("/messages", authenticateUser, async (req, res) => {
+const { message, hearts } = req.body
+
+try {
+  const newMessage = await new Thought ({ message, hearts}) //saved to variabel to use in response
+  const savedMessage = await newMessage.save(); 
+
+  res.status (201).json ({
+    sucess: true,
+    response: savedMessage,
+    message: "message created successfully"
+
+  })
+} catch (error) {
+  res.status (500).json ({
+    sucess: false,
+    response: error,
+    message: "happy thought could not be found, please try again"
+
+  })
+}
+})
+
+//DELETE Endpoint delete a thought
+app.delete("/messages/:id", authenticateUser, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedMessage = await Thought.findByIdAndDelete(id);
+
+    if (!deletedMessage) {
+      return res.status(404).json({
+        success: false,
+        message: "Message not found"
+      });
+    }
+
+    res.status(200).json({
+      sucess: true,
+      response: deletedMessage,
+      message: "Message deleted successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      response: error,
+      message: "Something went wrong while deleting the message"
+    });
+  }
+});
+
+//PATCH Endpoint edit or update a thought
+app.patch("/messages/:id", authenticateUser, async (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+
+  try {
+    const updatedMessage = await Thought.findByIdAndUpdate(
+      id,
+      { message },
+      {
+        new: true,
+        runValidators: true // ensure it validates the schema
+      }
+    );
+
+    if (!updatedMessage) {
+      return res.status(404).json({
+        success: false,
+        message: "Thought not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      response: updatedMessage,
+      message: "Updated message successfully"
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      response: error,
+      message: "Failed to update the message"
+    });
+  }
+});
+
+
 
 
 

@@ -15,7 +15,7 @@ const thoughtSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    //required: true //not required to see what user creates what
   },
   createdAt: { //creation timestamp
     type: Date,
