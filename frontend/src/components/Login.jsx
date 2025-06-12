@@ -96,10 +96,8 @@ const LinkSpan = styled.span`
 `;
 
 const Login = ({ setIsLoggedIn }) => {
-  //const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [logoutMessage, setLogoutMessage] = useState("");
 
   const [formData, setFormData] = useState({

@@ -46,7 +46,7 @@ h1 {
   }
 }
 
-
+//adjust to light color scheme
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

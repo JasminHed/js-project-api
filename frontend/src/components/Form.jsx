@@ -89,8 +89,13 @@ const Error = styled.p`
   margin-left: 10px;
 `;
 
-// Form to send message and handle message
-const Form = ({ messageText, setMessageText, handleMessage, error }) => {
+const Form = ({
+  isLoggedIn,
+  messageText,
+  setMessageText,
+  handleMessage,
+  error,
+}) => {
   return (
     <FormWrapper onSubmit={handleMessage}>
       <Label htmlFor="input">What's making you happy right now?</Label>
@@ -98,8 +103,12 @@ const Form = ({ messageText, setMessageText, handleMessage, error }) => {
         id="input"
         value={messageText}
         onChange={(event) => setMessageText(event.target.value)}
+        disabled={!isLoggedIn} // Disable input when not logged in
       />
-      <Button type="submit"> ❤️ Send Happy Thought! ❤️</Button>
+      <Button type="submit" disabled={!isLoggedIn}>
+        ❤️ Send Happy Thought! ❤️
+      </Button>
+      {!isLoggedIn && <Error>Log in to post a happy thought!</Error>}
       {error && <Error>{error.toString()}</Error>}
     </FormWrapper>
   );

@@ -29,10 +29,10 @@ const GetButton = styled.button`
   }
 `;
 
-const EditError = styled.p`
-  color: white;
-  margin-top: 10px;
-`;
+//const EditError = styled.p`
+//color: white;
+// margin-top: 10px;
+//`;
 
 const BASE_URL = "https://js-project-api-x10r.onrender.com";
 
@@ -42,7 +42,9 @@ const App = () => {
 
   const [messageText, setMessageText] = useState("");
   const [error, setError] = useState(null);
-  const [editError, setEditError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("accessToken") //only shows edit+delete if log in
+  );
 
   const handleMessage = (event) => {
     event.preventDefault();
@@ -53,9 +55,10 @@ const App = () => {
         Authorization: localStorage.getItem("accessToken"), //backend "this user is logged in" so they can pass authentication.
       },
 
+      //sends id to backend to save message
       body: JSON.stringify({
         message: messageText,
-        user: localStorage.getItem("userId"), //backend "this message belongs to this specific user" so it gets saved with the correct owner.
+        user: localStorage.getItem("userId"),
       }),
     })
       .then((res) => {
@@ -70,6 +73,7 @@ const App = () => {
       .catch((err) => setError(err.message));
   };
 
+  //handles messages
   const fetchMessages = () => {
     setLoading(true);
 
@@ -95,6 +99,7 @@ const App = () => {
     fetchMessages();
   }, []);
 
+  //handles likes
   const handleClick = () => {
     setLoading(true);
     fetch(`${BASE_URL}/messages?hearts=5`)
@@ -116,7 +121,7 @@ const App = () => {
         setLoading(false);
       });
   };
-
+  //handles delete
   const deleteMessage = (id) => {
     fetch(`${BASE_URL}/messages/${id}`, {
       method: "DELETE",
@@ -135,13 +140,9 @@ const App = () => {
         console.error(error);
       });
   };
-
+  //handles edit
   const editMessage = (id, updatedText) => {
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      setEditError("You must be logged in to edit a message.");
-      return;
-    }
 
     fetch(`${BASE_URL}/messages/${id}`, {
       method: "PATCH",
@@ -176,10 +177,11 @@ const App = () => {
     <>
       <GlobalStyle />
       <h1>Your daily dose of happy thoughts!</h1>
-      {editError && <EditError>{editError}</EditError>}
 
-      <Login />
+      <Login setIsLoggedIn={setIsLoggedIn} />
+
       <Form
+        isLoggedIn={isLoggedIn}
         messageText={messageText}
         setMessageText={setMessageText}
         handleMessage={handleMessage}
@@ -190,6 +192,7 @@ const App = () => {
       {messages.length > 0 &&
         messages.map((message) => (
           <MessageCard
+            isLoggedIn={isLoggedIn}
             key={message._id}
             message={message}
             onDelete={deleteMessage}
