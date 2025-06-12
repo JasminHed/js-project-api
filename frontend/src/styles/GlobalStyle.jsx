@@ -33,7 +33,7 @@ body {
 h1 {
   font-size: 24px;
   margin-left: 10px;
-  margin-top: 20px;
+  margin-top: 45px;
   margin-bottom: 40px;
 }
 

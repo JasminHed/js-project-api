@@ -32,7 +32,7 @@ const PopUp = styled.div`
 `;
 
 const Form = styled.form`
-  background: inherit;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   padding: 20px;
   border-radius: 8px;
   width: 300px;
@@ -104,6 +104,7 @@ const Login = () => {
           localStorage.setItem("accessToken", data.accessToken);
           setError("Login successful!"); // Add success message
           setIsLoggedIn(true);
+          setFormData({ email: "", password: "" });
         }
       });
   };
@@ -113,6 +114,7 @@ const Login = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
+    setFormData({ email: "", password: "" });
   };
 
   return (
