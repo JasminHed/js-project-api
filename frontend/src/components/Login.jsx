@@ -16,7 +16,21 @@ const LoginButton = styled.button`
 `;
 
 const LogoutButton = styled.button`
-  margin-top: 10px;
+  position: fixed;
+  top: 10px;
+  left: 110px;
+  padding: 8px 16px;
+  background: #3a3f6b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
+const LogoutMessage = styled.p`
+  color: white;
+  top: 10px;
+  left: 110px;
 `;
 
 const CloseButton = styled.button`
@@ -37,17 +51,18 @@ const PopUp = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 `;
 
 const Form = styled.form`
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 100%;
+  max-width: 320px;
 `;
 
 const Label = styled.label`
@@ -80,10 +95,13 @@ const LinkSpan = styled.span`
   cursor: pointer;
 `;
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
+  //const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [logoutMessage, setLogoutMessage] = useState("");
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -126,11 +144,18 @@ const Login = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
+    setLogoutMessage("You are now logged out.");
+
+    setTimeout(() => setLogoutMessage(""), 3000);
   };
 
   return (
     <>
-      <LoginButton onClick={() => setIsOpen(true)}>Log In</LoginButton>{" "}
+      <LoginButton onClick={() => setIsOpen(true)}>Log In</LoginButton>
+      <LogoutButton type="button" onClick={handleLogout}>
+        Logout
+      </LogoutButton>
+      {logoutMessage && <LogoutMessage>{logoutMessage}</LogoutMessage>}
       {isOpen && (
         <PopUp onClick={() => setIsOpen(false)}>
           <Form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
@@ -156,11 +181,7 @@ const Login = () => {
                 />
                 {error && <ErrorDiv>{error}</ErrorDiv>}
                 <button type="submit">Log In</button>
-                {isLoggedIn && (
-                  <LogoutButton type="button" onClick={handleLogout}>
-                    Logout
-                  </LogoutButton>
-                )}
+
                 <RegisterLink>
                   No account?{" "}
                   <LinkSpan onClick={() => setShowRegister(true)}>

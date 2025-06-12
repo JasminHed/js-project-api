@@ -29,6 +29,11 @@ const GetButton = styled.button`
   }
 `;
 
+const EditError = styled.p`
+  color: white;
+  margin-top: 10px;
+`;
+
 const BASE_URL = "https://js-project-api-x10r.onrender.com";
 
 const App = () => {
@@ -37,6 +42,7 @@ const App = () => {
 
   const [messageText, setMessageText] = useState("");
   const [error, setError] = useState(null);
+  const [editError, setEditError] = useState(null);
 
   const handleMessage = (event) => {
     event.preventDefault();
@@ -130,19 +136,28 @@ const App = () => {
       });
   };
 
-  const editMessage = (id) => {
-    const updatedText = prompt("Edit your message:");
-    if (!updatedText) return;
+  const editMessage = (id, updatedText) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      setEditError("You must be logged in to edit a message.");
+      return;
+    }
+
     fetch(`${BASE_URL}/messages/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("accessToken"), // Flytta hit
+        Authorization: accessToken,
       },
       body: JSON.stringify({ message: updatedText }),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to edit the message");
+        if (!res.ok) {
+          if (res.status === 401) {
+            alert("Session expired. Please log in again.");
+          }
+          throw new Error("Failed to edit the message");
+        }
         return res.json();
       })
       .then(() => {
@@ -161,6 +176,8 @@ const App = () => {
     <>
       <GlobalStyle />
       <h1>Your daily dose of happy thoughts!</h1>
+      {editError && <EditError>{editError}</EditError>}
+
       <Login />
       <Form
         messageText={messageText}
