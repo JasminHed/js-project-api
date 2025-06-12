@@ -39,6 +39,10 @@ const Register = ({ setShowRegister }) => {
       setError("Please fill in all fields");
       return;
     }
+    if (formData.password.length < 5) {
+      setError("Password must be at least 5 characters");
+      return;
+    }
 
     fetch("https://js-project-api-x10r.onrender.com/users", {
       method: "POST",

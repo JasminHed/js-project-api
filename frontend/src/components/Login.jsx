@@ -19,6 +19,18 @@ const LogoutButton = styled.button`
   margin-top: 10px;
 `;
 
+const CloseButton = styled.button`
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
 const PopUp = styled.div`
   position: fixed;
   top: 0;
@@ -88,6 +100,7 @@ const Login = () => {
     }
 
     setError("");
+    setFormData({ email: "", password: "" });
 
     fetch("https://js-project-api-x10r.onrender.com/sessions", {
       method: "POST",
@@ -104,7 +117,6 @@ const Login = () => {
           localStorage.setItem("accessToken", data.accessToken);
           setError("Login successful!"); // Add success message
           setIsLoggedIn(true);
-          setFormData({ email: "", password: "" });
         }
       });
   };
@@ -114,12 +126,11 @@ const Login = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
-    setFormData({ email: "", password: "" });
   };
 
   return (
     <>
-      <LoginButton onClick={() => setIsOpen(true)}>Log In</LoginButton>
+      <LoginButton onClick={() => setIsOpen(true)}>Log In</LoginButton>{" "}
       {isOpen && (
         <PopUp onClick={() => setIsOpen(false)}>
           <Form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
@@ -156,6 +167,9 @@ const Login = () => {
                     Register here
                   </LinkSpan>
                 </RegisterLink>
+                <CloseButton type="button" onClick={() => setIsOpen(false)}>
+                  Close
+                </CloseButton>
               </>
             ) : (
               <Register setShowRegister={setShowRegister} />
