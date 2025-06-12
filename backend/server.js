@@ -13,20 +13,23 @@ import User from "./model/User.js";
 const authenticateUser = async (req, res, next) => {
   const user = await User.findOne({
     accessToken: req.header("Authorization")
-  })
+  });
+
   if (user) {
-    req.user = user
-    next()
+    req.user = user;
+    next();
   } else {
     res.status(401).json({
-      loggedOut: true
-    })
+      success: false,
+      message: "You must be logged in to access this resource",
+      loggedOut: true,
+    });
   }
-}
+};
 
 dotenv.config()
 
-//atlas database from env.file if atlas missing go to local database
+//atlas database from env.file or go to local (?)
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/happyThoughts"
 mongoose.connect(mongoUrl) 
 
