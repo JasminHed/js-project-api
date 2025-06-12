@@ -5,6 +5,7 @@ import Form from "./components/Form.jsx";
 import Login from "./components/Login.jsx";
 import MessageCard from "./components/MessageCard.jsx";
 import Register from "./components/Register.jsx";
+import GlobalStyle from "./styles/GlobalStyle";
 
 const GetButton = styled.button`
   display: block;
@@ -158,8 +159,8 @@ const App = () => {
 
   return (
     <>
+      <GlobalStyle />
       <h1>Your daily dose of happy thoughts!</h1>
-      <Register />
       <Login />
       <Form
         messageText={messageText}

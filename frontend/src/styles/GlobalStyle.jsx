@@ -1,3 +1,7 @@
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
@@ -55,3 +59,6 @@ h1 {
     background-color: #f9f9f9;
   }
 }
+`;
+
+export default GlobalStyle;

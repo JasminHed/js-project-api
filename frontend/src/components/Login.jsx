@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import Register from "./Register.jsx";
+
 const LoginButton = styled.button`
   position: fixed;
   top: 10px;
@@ -11,6 +13,10 @@ const LoginButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+`;
+
+const LogoutButton = styled.button`
+  margin-top: 10px;
 `;
 
 const PopUp = styled.div`
@@ -48,8 +54,24 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
+const ErrorDiv = styled.div`
+  color: white;
+`;
+
+const RegisterLink = styled.p`
+  font-size: 12px;
+  margin-top: 10px;
+`;
+
+const LinkSpan = styled.span`
+  color: #007bff;
+  cursor: pointer;
+`;
+
 const Login = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -81,8 +103,16 @@ const Login = () => {
           localStorage.setItem("userId", data.userId); //stores user ID in local storage
           localStorage.setItem("accessToken", data.accessToken);
           setError("Login successful!"); // Add success message
+          setIsLoggedIn(true);
         }
       });
+  };
+
+  //funtion for logging out
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("accessToken");
+    setIsLoggedIn(false);
   };
 
   return (
@@ -90,27 +120,44 @@ const Login = () => {
       <LoginButton onClick={() => setIsOpen(true)}>Log In</LoginButton>
       {isOpen && (
         <PopUp onClick={() => setIsOpen(false)}>
-          <Form onSubmit={handleSubmit}>
-            {error && <div style={{ color: "red" }}>{error}</div>}
-            <Label htmlFor="email">Email</Label>
-            <Input
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              type="text"
-              name="email"
-              value={formData.email}
-            />
-            <Label htmlFor="password">Password</Label>
-            <Input
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              type="password"
-              name="password"
-              value={formData.password}
-            />
-            <button type="submit">Log In</button>
+          <Form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
+            {!showRegister ? (
+              <>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  type="text"
+                  name="email"
+                  value={formData.email}
+                />
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                />
+                {error && <ErrorDiv>{error}</ErrorDiv>}
+                <button type="submit">Log In</button>
+                {isLoggedIn && (
+                  <LogoutButton type="button" onClick={handleLogout}>
+                    Logout
+                  </LogoutButton>
+                )}
+                <RegisterLink>
+                  No account?{" "}
+                  <LinkSpan onClick={() => setShowRegister(true)}>
+                    Register here
+                  </LinkSpan>
+                </RegisterLink>
+              </>
+            ) : (
+              <Register setShowRegister={setShowRegister} />
+            )}
           </Form>
         </PopUp>
       )}

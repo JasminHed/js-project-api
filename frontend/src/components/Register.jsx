@@ -1,6 +1,31 @@
 import { useState } from "react";
+import styled from "styled-components";
 
-const Register = () => {
+const Label = styled.label`
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 25px;
+  font-size: 14px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+const ErrorDiv = styled.div`
+  color: white;
+`;
+
+const BackButton = styled.button`
+  margin-top: 10px;
+`;
+
+const Register = ({ setShowRegister }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -9,15 +34,11 @@ const Register = () => {
 
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form data:", formData);
+  const handleSubmit = () => {
     if (!formData.name || !formData.email || !formData.password) {
-      console.log("validation failed");
       setError("Please fill in all fields");
       return;
     }
-    console.log("fecth");
 
     fetch("https://js-project-api-x10r.onrender.com/users", {
       method: "POST",
@@ -41,36 +62,37 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Register</h1>
-      {error && <div style={{ color: "red" }}>{error}</div>}
-
-      <label htmlFor="name">Name</label>
-      <input
+    <>
+      <Label htmlFor="name">Name</Label>
+      <Input
         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
         type="text"
         name="name"
         value={formData.name}
       />
 
-      <label htmlFor="email">Email</label>
-      <input
+      <Label htmlFor="email">Email</Label>
+      <Input
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         type="email"
         name="email"
         value={formData.email}
       />
-
-      <label htmlFor="password">Password</label>
-      <input
+      <Label htmlFor="password">Password</Label>
+      <Input
         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         type="password"
         name="password"
         value={formData.password}
       />
-
-      <button type="submit">Sign up</button>
-    </form>
+      {error && <ErrorDiv>{error}</ErrorDiv>}
+      <button type="button" onClick={handleSubmit}>
+        Sign up
+      </button>
+      <BackButton type="button" onClick={() => setShowRegister(false)}>
+        Back to Login
+      </BackButton>
+    </>
   );
 };
 
