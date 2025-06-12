@@ -17,7 +17,7 @@ const Register = () => {
       setError("Please fill in all fields");
       return;
     }
-    console.log("about to fecth");
+    console.log("fecth");
 
     fetch("https://js-project-api-x10r.onrender.com/users", {
       method: "POST",
@@ -27,10 +27,10 @@ const Register = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          localStorage.setItem("accessToken", data.accessToken);
-          localStorage.setItem("userId", data.id);
+          localStorage.setItem("accessToken", data.accessToken); //storage
+          localStorage.setItem("userId", data.id); //storage
           setFormData({ name: "", email: "", password: "" });
-          setError("Registration successful! You can now create thoughts.");
+          setError("Registration successful! Please log in"); //sucessmessage
         } else {
           setError(data.message);
         }

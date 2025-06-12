@@ -134,8 +134,10 @@ const App = () => {
     if (!updatedText) return;
     fetch(`${BASE_URL}/messages/${id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      Authorization: localStorage.getItem("accessToken"),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("accessToken"), // Flytta hit
+      },
       body: JSON.stringify({ message: updatedText }),
     })
       .then((res) => {

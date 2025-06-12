@@ -25,6 +25,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("log in");
         if (data.notFound) {
           setError("Invalid email or password");
         } else {
@@ -38,7 +39,7 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit}>
       <h1>LOG IN</h1>
-      {error && <div style={{ color: "black" }}>{error}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <label htmlFor="email">Email</label>
       <input
         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
