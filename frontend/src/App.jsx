@@ -68,7 +68,7 @@ const App = () => {
 
   //handles messages
   const fetchMessages = () => {
-    setLoading(true);
+    //setLoading(true); //this made the page reload?
 
     fetch(`${BASE_URL}/messages`)
       .then((response) => {

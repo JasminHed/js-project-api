@@ -58,6 +58,11 @@ const Textarea = styled.textarea`
   }
 `;
 
+const Character = styled.p`
+  font-size: 12px;
+  margin: 2px 0 0 13px;
+`;
+
 const Button = styled.button`
   border-radius: 20px;
   cursor: pointer;
@@ -105,7 +110,10 @@ const Form = ({
         value={messageText}
         onChange={(event) => setMessageText(event.target.value)}
         disabled={!isLoggedIn} // Disable input when not logged in
+        maxLength={140}
       />
+      <Character>{messageText.length}/140 characters</Character>
+
       <Button type="submit" disabled={!isLoggedIn}>
         ❤️ Send Happy Thought! ❤️
       </Button>
