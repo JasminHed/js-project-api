@@ -16,12 +16,12 @@ const GetButton = styled.button`
   content: cover;
   border: none;
   margin: 0 auto;
-  background-color: #ff7043;
+  background-color: #3a3f6b;
   margin-top: 40px;
   margin-bottom: 40px;
 
   &:hover {
-    background-color: #ff8a65;
+    background-color: #2b2f5c;
     outline: 2px solid white;
   }
 `;

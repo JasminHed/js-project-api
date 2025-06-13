@@ -31,7 +31,7 @@ const ButtonGroup = styled.div`
 `;
 
 const ActionButton = styled.button`
-  background-color: #0099ff;
+  background-color: #3a3f6b;
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1rem;
@@ -39,7 +39,7 @@ const ActionButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #33aaff;
+    background-color: #2b2f5c;
     outline: 2px solid white;
   }
 `;

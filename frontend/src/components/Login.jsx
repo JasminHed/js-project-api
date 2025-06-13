@@ -8,7 +8,7 @@ const LoginButton = styled.button`
   top: 10px;
   left: 10px;
   padding: 8px 16px;
-  background: #0099ff;
+  background: #3a3f6b;
   color: white;
   border: none;
   border-radius: 4px;
@@ -16,7 +16,7 @@ const LoginButton = styled.button`
 
   &:hover,
   &:focus {
-    background-color: #33aaff;
+    background-color: #2b2f5c;
     outline: 2px solid white;
   }
 `;
@@ -51,7 +51,7 @@ const CloseButton = styled.button`
   top: 10px;
   left: 10px;
   padding: 8px 16px;
-  background: #0099ff;
+  background: #3a3f6b;
   color: white;
   border: none;
   border-radius: 4px;
@@ -59,7 +59,7 @@ const CloseButton = styled.button`
 
   &:hover,
   &:focus {
-    background-color: #33aaff;
+    background-color: #2b2f5c;
     outline: 2px solid white;
   }
 `;
