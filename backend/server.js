@@ -124,6 +124,7 @@ app.post("/messages/:id/like", async (req, res) => {
 app.post("/users", (req, res) => {
   try {
     const { name, email, password } = req.body
+    //Hashes the user's password before saving to the database
     const salt = bcrypt.genSaltSync()
     const user = new User({ name, email, password: bcrypt.hashSync(password, salt) })
     user.save()
