@@ -8,7 +8,7 @@ const LoginButton = styled.button`
   top: 10px;
   left: 10px;
   padding: 8px 16px;
-  background: #007bff;
+  background: #0099ff;
   color: white;
   border: none;
   border-radius: 4px;
@@ -16,7 +16,7 @@ const LoginButton = styled.button`
 
   &:hover,
   &:focus {
-    background-color: #0056b3;
+    background-color: #33aaff;
     outline: 2px solid white;
   }
 `;
@@ -51,7 +51,7 @@ const CloseButton = styled.button`
   top: 10px;
   left: 10px;
   padding: 8px 16px;
-  background: #007bff;
+  background: #0099ff;
   color: white;
   border: none;
   border-radius: 4px;
@@ -59,7 +59,7 @@ const CloseButton = styled.button`
 
   &:hover,
   &:focus {
-    background-color: #2b2f5c;
+    background-color: #33aaff;
     outline: 2px solid white;
   }
 `;
@@ -110,7 +110,7 @@ const RegisterLink = styled.p`
 `;
 
 const LinkSpan = styled.span`
-  color: #007bff;
+  color: #4a9eff;
   cursor: pointer;
 `;
 
