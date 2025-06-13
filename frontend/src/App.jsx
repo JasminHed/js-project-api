@@ -16,12 +16,12 @@ const GetButton = styled.button`
   content: cover;
   border: none;
   margin: 0 auto;
-  background-color: #0099ff;
+  background-color: #ff7043;
   margin-top: 40px;
   margin-bottom: 40px;
 
   &:hover {
-    background-color: #33aaff;
+    background-color: #ff8a65;
     outline: 2px solid white;
   }
 `;
@@ -68,8 +68,6 @@ const App = () => {
 
   //handles messages
   const fetchMessages = () => {
-    //setLoading(true); //this made the page reload?
-
     fetch(`${BASE_URL}/messages`)
       .then((response) => {
         if (response.ok) {
@@ -94,7 +92,6 @@ const App = () => {
 
   //handles likes
   const handleClick = () => {
-    setLoading(true);
     fetch(`${BASE_URL}/messages?hearts=5`)
       .then((response) => {
         if (response.ok) {
