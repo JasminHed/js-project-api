@@ -22,17 +22,9 @@ const GetButton = styled.button`
 
   &:hover {
     background-color: #3d3fa6;
-  }
-
-  Button:focus {
-    border: 2px solid white;
+    outline: 2px solid white;
   }
 `;
-
-//const EditError = styled.p`
-//color: white;
-// margin-top: 10px;
-//`;
 
 const BASE_URL = "https://js-project-api-x10r.onrender.com";
 
@@ -70,6 +62,7 @@ const App = () => {
         setMessageText("");
         setError(null);
       })
+
       .catch((err) => setError(err.message));
   };
 
@@ -121,6 +114,11 @@ const App = () => {
         setLoading(false);
       });
   };
+
+  const handleShowAll = () => {
+    fetchMessages(); // re-fetch all messages
+  };
+
   //handles delete
   const deleteMessage = (id) => {
     fetch(`${BASE_URL}/messages/${id}`, {
@@ -188,6 +186,7 @@ const App = () => {
         error={error}
       />
       <GetButton onClick={handleClick}>Get messages with 5+ hearts</GetButton>
+      <GetButton onClick={handleShowAll}>Show all messages</GetButton>
 
       {messages.length > 0 &&
         messages.map((message) => (

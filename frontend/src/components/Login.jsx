@@ -13,6 +13,12 @@ const LoginButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: #0056b3;
+    outline: 2px solid white;
+  }
 `;
 
 const LogoutButton = styled.button`
@@ -25,6 +31,12 @@ const LogoutButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: #2b2f5c;
+    outline: 2px solid white;
+  }
 `;
 
 const LogoutMessage = styled.p`
@@ -44,6 +56,12 @@ const CloseButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: #2b2f5c;
+    outline: 2px solid white;
+  }
 `;
 
 const PopUp = styled.div`
@@ -133,6 +151,8 @@ const Login = ({ setIsLoggedIn }) => {
           localStorage.setItem("userId", data.userId); //stores user ID in local storage
           localStorage.setItem("accessToken", data.accessToken);
           setError("Login successful!"); // Add success message
+          setTimeout(() => setError(""), 3000);
+
           setIsLoggedIn(true);
         }
       });
@@ -183,7 +203,12 @@ const Login = ({ setIsLoggedIn }) => {
 
                 <RegisterLink>
                   No account?{" "}
-                  <LinkSpan onClick={() => setShowRegister(true)}>
+                  <LinkSpan
+                    onClick={() => {
+                      setFormData({ email: "", password: "" });
+                      setShowRegister(true);
+                    }}
+                  >
                     Register here
                   </LinkSpan>
                 </RegisterLink>

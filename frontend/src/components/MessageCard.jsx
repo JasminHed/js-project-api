@@ -40,6 +40,7 @@ const ActionButton = styled.button`
 
   &:hover {
     background-color: #535bf2;
+    outline: 2px solid white;
   }
 `;
 

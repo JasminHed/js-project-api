@@ -68,11 +68,9 @@ const Button = styled.button`
   margin-bottom: 20px;
   margin-left: 10px;
 
-  Button:focus {
-    border: 2px solid white;
-  }
   &:hover {
     background-color: #1a3c6c;
+    outline: 2px solid white;
   }
 
   @media (min-width: 360px) {

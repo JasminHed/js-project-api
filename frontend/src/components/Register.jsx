@@ -57,6 +57,7 @@ const Register = ({ setShowRegister }) => {
           localStorage.setItem("userId", data.id); //storage
           setFormData({ name: "", email: "", password: "" });
           setError("Registration successful! Please log in"); //sucessmessage
+          setTimeout(() => setError(""), 3000);
         } else {
           setError(data.message);
         }
@@ -94,7 +95,13 @@ const Register = ({ setShowRegister }) => {
       <button type="button" onClick={handleSubmit}>
         Sign up
       </button>
-      <BackButton type="button" onClick={() => setShowRegister(false)}>
+      <BackButton
+        type="button"
+        onClick={() => {
+          setFormData({ name: "", email: "", password: "" });
+          setShowRegister(false);
+        }}
+      >
         Back to Login
       </BackButton>
     </>
