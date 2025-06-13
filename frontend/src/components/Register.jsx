@@ -9,7 +9,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 280px;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -23,6 +23,7 @@ const ErrorDiv = styled.div`
 
 const BackButton = styled.button`
   margin-top: 10px;
+  margin-left: 15px;
 `;
 
 const Register = ({ setShowRegister }) => {

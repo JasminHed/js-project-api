@@ -28,8 +28,9 @@ const LogoutButton = styled.button`
 `;
 
 const LogoutMessage = styled.p`
+  position: absolute;
   color: white;
-  top: 10px;
+  top: 30px;
   left: 110px;
 `;
 
@@ -51,7 +52,7 @@ const PopUp = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6); //background turns darker
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -73,7 +74,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 280px;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;

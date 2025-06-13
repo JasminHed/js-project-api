@@ -41,7 +41,7 @@ h1 {
   h1 {
     font-size: 32px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 40px;
     margin-bottom: 40px;
   }
 }
