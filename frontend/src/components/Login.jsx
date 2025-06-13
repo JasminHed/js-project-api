@@ -77,7 +77,9 @@ const PopUp = styled.div`
 `;
 
 const Form = styled.form`
+  background-color: #2a2a2a;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 2px solid #444;
   padding: 20px;
   border-radius: 8px;
   width: 100%;
