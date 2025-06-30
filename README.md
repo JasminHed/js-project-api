@@ -1,11 +1,44 @@
-# Project API
+# Fullstack API Project 
 
-This project includes the packages and babel setup for an express server, and is just meant to make things a little simpler to get up and running with.
+Live Demo: https://apifrontback.netlify.app/
 
-## Getting started
+Overview
+A complete fullstack application featuring both frontend and backend development. This project demonstrates how to build a React frontend that communicates with a custom backend API. It was my first dive into fullstack development, teaching me how different parts of a web application work together - from user interface to database interactions.
 
-Install dependencies with `npm install`, then start the server by running `npm run dev`
+Tech Stack
+Frontend: React, Vite, JavaScript (ES6+)
+Backend: Node.js, Express
+Database: MongoDB
+Styling: CSS3, Flexbox/Grid
+Deployment: Netlify (Frontend), Render (Backend)
+Version Control: Git/GitHub
 
-## View it live
+Features
+Interactive React frontend with modern UI
+RESTful API endpoints for data operations
+Real-time data synchronization between frontend and backend
+User authentication and session management
+CRUD operations (Create, Read, Update, Delete)
+Responsive design for all devices
+Error handling and loading states
 
-Every project should be deployed somewhere. Be sure to include the link to the deployed project so that the viewer can click around and see what it's all about.
+Setup Instructions
+Run locally:
+bash# Clone the repository
+git clone [your-repo-url]
+cd fullstack-api-app
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+Note: Backend server configuration may be required for full functionality
+
+What I Learned
+Building React applications with modern hooks and state management
+Creating RESTful APIs with proper HTTP methods
+Database integration and data modeling
+Frontend-backend communication and API design
+Authentication and security best practices
+Deployment strategies for fullstack applications
