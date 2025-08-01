@@ -171,30 +171,34 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <h1>Your daily dose of happy thoughts!</h1>
+      <header>
+        <h1>Your daily dose of happy thoughts!</h1>
+      </header>
+      <nav>
+        <Login setIsLoggedIn={setIsLoggedIn} />
+      </nav>
+      <main>
+        <Form
+          isLoggedIn={isLoggedIn}
+          messageText={messageText}
+          setMessageText={setMessageText}
+          handleMessage={handleMessage}
+          error={error}
+        />
+        <GetButton onClick={handleClick}>Get messages with 5+ hearts</GetButton>
+        <GetButton onClick={handleShowAll}>Show all messages</GetButton>
 
-      <Login setIsLoggedIn={setIsLoggedIn} />
-
-      <Form
-        isLoggedIn={isLoggedIn}
-        messageText={messageText}
-        setMessageText={setMessageText}
-        handleMessage={handleMessage}
-        error={error}
-      />
-      <GetButton onClick={handleClick}>Get messages with 5+ hearts</GetButton>
-      <GetButton onClick={handleShowAll}>Show all messages</GetButton>
-
-      {messages.length > 0 &&
-        messages.map((message) => (
-          <MessageCard
-            isLoggedIn={isLoggedIn}
-            key={message._id}
-            message={message}
-            onDelete={deleteMessage}
-            onEdit={editMessage}
-          />
-        ))}
+        {messages.length > 0 &&
+          messages.map((message) => (
+            <MessageCard
+              isLoggedIn={isLoggedIn}
+              key={message._id}
+              message={message}
+              onDelete={deleteMessage}
+              onEdit={editMessage}
+            />
+          ))}
+      </main>
     </>
   );
 };
