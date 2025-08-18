@@ -52,9 +52,16 @@ const MessageCard = ({
   isLoggedIn,
   loggedInUserId,
 }) => {
-  const [likes, setLikes] = useState(message.hearts);
+  const [likes, setLikes] = useState(message.hearts ?? 0);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedText, setEditedText] = useState(message.message);
+  const [editedText, setEditedText] = useState(message.message ?? "");
+
+  // Gör jämförelsen robust (ObjectId vs string)
+  const isOwner =
+    isLoggedIn &&
+    message.userId &&
+    loggedInUserId &&
+    String(message.userId) === String(loggedInUserId);
 
   const handleLike = () => {
     fetch(
@@ -64,7 +71,7 @@ const MessageCard = ({
       }
     )
       .then((res) => res.json())
-      .then(() => setLikes(likes + 1))
+      .then(() => setLikes((v) => v + 1))
       .catch((err) => console.error("Failed to like message", err));
   };
 
@@ -81,7 +88,6 @@ const MessageCard = ({
             value={editedText}
             onChange={(e) => setEditedText(e.target.value)}
           />
-
           <ButtonGroup>
             <ActionButton onClick={handleEdit}>Save</ActionButton>
             <ActionButton onClick={() => setIsEditing(false)}>
@@ -98,16 +104,19 @@ const MessageCard = ({
             <ActionButton type="button" onClick={handleLike}>
               Like ❤️
             </ActionButton>
-            {isLoggedIn && message.userId === loggedInUserId && (
-              <ActionButton type="button" onClick={() => onDelete(message._id)}>
-                Delete
-              </ActionButton>
-            )}
 
-            {isLoggedIn && message.userId === loggedInUserId && (
-              <ActionButton type="button" onClick={() => setIsEditing(true)}>
-                Edit
-              </ActionButton>
+            {isOwner && (
+              <>
+                <ActionButton
+                  type="button"
+                  onClick={() => onDelete(message._id)}
+                >
+                  Delete
+                </ActionButton>
+                <ActionButton type="button" onClick={() => setIsEditing(true)}>
+                  Edit
+                </ActionButton>
+              </>
             )}
           </ButtonGroup>
         </>
