@@ -32,6 +32,7 @@ const ButtonGroup = styled.div`
 
 const ActionButton = styled.button`
   background-color: #3a3f6b;
+  font-size: 16px;
   border: none;
   border-radius: 6px;
   padding: 0.5rem 1rem;
@@ -44,7 +45,13 @@ const ActionButton = styled.button`
   }
 `;
 
-const MessageCard = ({ message, onDelete, onEdit, isLoggedIn }) => {
+const MessageCard = ({
+  message,
+  onDelete,
+  onEdit,
+  isLoggedIn,
+  loggedInUserId,
+}) => {
   const [likes, setLikes] = useState(message.hearts);
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(message.message);
@@ -91,18 +98,16 @@ const MessageCard = ({ message, onDelete, onEdit, isLoggedIn }) => {
             <ActionButton type="button" onClick={handleLike}>
               Like ❤️
             </ActionButton>
-            {isLoggedIn && (
-              <>
-                <ActionButton
-                  type="button"
-                  onClick={() => onDelete(message._id)}
-                >
-                  Delete
-                </ActionButton>
-                <ActionButton type="button" onClick={() => setIsEditing(true)}>
-                  Edit
-                </ActionButton>
-              </>
+            {isLoggedIn && message.userId === loggedInUserId && (
+              <ActionButton type="button" onClick={() => onDelete(message._id)}>
+                Delete
+              </ActionButton>
+            )}
+
+            {isLoggedIn && message.userId === loggedInUserId && (
+              <ActionButton type="button" onClick={() => setIsEditing(true)}>
+                Edit
+              </ActionButton>
             )}
           </ButtonGroup>
         </>

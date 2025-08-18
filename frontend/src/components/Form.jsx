@@ -65,6 +65,7 @@ const Character = styled.p`
 
 const Button = styled.button`
   border-radius: 20px;
+  font-size: 16px;
   cursor: pointer;
   width: auto;
   padding: 12px;

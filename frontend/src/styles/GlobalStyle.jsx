@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
-  font-size: 16px;
+  
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
 
 body {
   margin: 0;
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
