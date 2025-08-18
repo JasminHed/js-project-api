@@ -12,10 +12,10 @@ const thoughtSchema = new mongoose.Schema({
     default: 0
   },
   //new, should i have this?
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    //required: true //not required to see what user creates what
+    required: true 
   },
   createdAt: { //creation timestamp
     type: Date,

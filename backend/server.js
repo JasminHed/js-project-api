@@ -183,7 +183,7 @@ app.post("/messages", authenticateUser, async (req, res) => {
     const newMessage = new Thought({ 
       message, 
       hearts, 
-      userId: req.user._id // koppla thought till användaren
+      userId: req.user._id 
     });
     const savedMessage = await newMessage.save(); 
 
@@ -236,21 +236,25 @@ app.patch("/messages/:id", authenticateUser, async (req, res) => {
   const { message } = req.body;
 
   try {
-    const updatedMessage = await Thought.findByIdAndUpdate(
-      id,
-      { message },
-      {
-        new: true,
-        runValidators: true // ensure it validates the schema
-      }
-    );
+    const existingMessage = await Thought.findById(id);
 
-    if (!updatedMessage) {
+    if (!existingMessage) {
       return res.status(404).json({
         success: false,
         message: "Thought not found"
       });
     }
+
+    
+    if (existingMessage.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You can only edit your own thoughts"
+      });
+    }
+
+    existingMessage.message = message;
+    const updatedMessage = await existingMessage.save();
 
     res.status(200).json({
       success: true,
@@ -265,6 +269,7 @@ app.patch("/messages/:id", authenticateUser, async (req, res) => {
     });
   }
 });
+
 
 
 
