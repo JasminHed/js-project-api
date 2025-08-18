@@ -56,7 +56,13 @@ const MessageCard = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(message.message ?? "");
 
-  // Gör jämförelsen robust (ObjectId vs string)
+  console.log("🔍 DEBUG IDs", {
+    messageUserId: message.userId,
+    loggedInUserId: loggedInUserId,
+    asString_messageUserId: String(message.userId),
+    asString_loggedInUserId: String(loggedInUserId),
+  });
+
   const isOwner =
     isLoggedIn &&
     message.userId &&

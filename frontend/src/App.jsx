@@ -40,6 +40,13 @@ const App = () => {
 
   const handleMessage = (event) => {
     event.preventDefault();
+
+    if (!messageText.trim()) {
+      //check if empty
+      setError("Please enter a happy thought before submitting!");
+      return;
+    }
+
     fetch(`${BASE_URL}/messages`, {
       method: "POST",
       headers: {
@@ -192,6 +199,7 @@ const App = () => {
           messages.map((message) => (
             <MessageCard
               isLoggedIn={isLoggedIn}
+              loggedInUserId={localStorage.getItem("userId")}
               key={message._id}
               message={message}
               onDelete={deleteMessage}
