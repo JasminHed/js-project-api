@@ -177,53 +177,56 @@ console.log("user", user)
 
 //POST Endpoint create a thought
 app.post("/messages", authenticateUser, async (req, res) => {
-const { message, hearts } = req.body
+  const { message, hearts } = req.body
 
-try {
-  const newMessage = await new Thought ({ message, hearts}) //saved to variabel to use in response
-  const savedMessage = await newMessage.save(); 
+  try {
+    const newMessage = new Thought({ 
+      message, 
+      hearts, 
+      userId: req.user._id // koppla thought till användaren
+    });
+    const savedMessage = await newMessage.save(); 
 
-  res.status (201).json ({
-    sucess: true,
-    response: savedMessage,
-    message: "message created successfully"
+    res.status(201).json ({
+      success: true,
+      response: savedMessage,
+      message: "Message created successfully"
+    });
+  } catch (error) {
+    res.status(500).json ({
+      success: false,
+      response: error,
+      message: "Happy thought could not be saved, please try again"
+    });
+  }
+});
 
-  })
-} catch (error) {
-  res.status (500).json ({
-    sucess: false,
-    response: error,
-    message: "happy thought could not be found, please try again"
-
-  })
-}
-})
 
 //DELETE Endpoint delete a thought
 app.delete("/messages/:id", authenticateUser, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedMessage = await Thought.findByIdAndDelete(id);
+    const message = await Thought.findById(id);
 
-    if (!deletedMessage) {
-      return res.status(404).json({
-        success: false,
-        message: "Message not found"
-      });
+    if (!message) {
+      return res.status(404).json({ success: false, message: "Message not found" });
     }
 
+
+    if (message.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: "You can only delete your own thoughts" });
+    }
+
+    await message.deleteOne();
+
     res.status(200).json({
-      sucess: true,
-      response: deletedMessage,
+      success: true,
+      response: message,
       message: "Message deleted successfully"
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      response: error,
-      message: "Something went wrong while deleting the message"
-    });
+    res.status(500).json({ success: false, response: error, message: "Something went wrong" });
   }
 });
 
